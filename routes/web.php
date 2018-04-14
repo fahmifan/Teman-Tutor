@@ -33,6 +33,10 @@ $router->group(['prefix' => 'api'], function($router)
 		$router->delete('groups/{id}', 'GroupsController@delete');
 		$router->get('groups', 'GroupsController@allGroups');
 
+		// Routes for Group Message
+		$router->get('/groups/{id}/message', 'MessageController@getGroupsMessages');
+		$router->post('/groups/{id}/message', 'MessageController@sendMessage');
+
 		// Routes for Manipulating a User in a Group
 		$router->post('groups/{group_id}/{user_id}', 'Group_UserController@add');
 		$router->put('groups/{group_id}/{user_id}', 'Group_UserController@accept');

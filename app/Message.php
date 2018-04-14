@@ -5,13 +5,12 @@ namespace App;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class Message extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    protected $table = 'Users';
+    protected $table = 'Message';
 
     use Authenticatable, Authorizable;
 
@@ -21,7 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'gender', 'birth_date', 'address', 'api_token', 'remember_token'
+        'message', 'user_id', 'group_id'
     ];
 
     /**
@@ -30,16 +29,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password', 'api_token', 
+        
     ];
 
-    public function groups(){
-
-        return $this->belongsToMany('App\Group');
-
-    }
-
-    public function messages() {
-        return $this->hasMany('App\Messages');
+    /**
+     * A message belong to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() {
+        return $this->belongsTo('App\User');
     }
 }
